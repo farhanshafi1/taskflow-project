@@ -1,0 +1,1 @@
+import { registerSchema } from '../src/validators';test('rejects weak password',()=>{expect(registerSchema.safeParse({name:'A',email:'a@b.com',password:'123'}).success).toBe(false)});test('sanitises angle brackets',()=>{const r=registerSchema.parse({name:'<Sam>',email:'SAM@EXAMPLE.COM',password:'password1'});expect(r.name).toBe('Sam');expect(r.email).toBe('sam@example.com')});
