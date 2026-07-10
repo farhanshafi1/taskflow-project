@@ -1,0 +1,6 @@
+import type { Request,Response } from 'express';import { prisma } from '../lib/prisma.js';
+export async function listProjects(req:Request,res:Response){res.json(await prisma.project.findMany({where:{ownerId:req.user!.id},include:{tasks:true},orderBy:{createdAt:'desc'}}));}
+export async function getProject(req:Request,res:Response){const id=Number(req.params.id);const p=await prisma.project.findFirst({where:{id,ownerId:req.user!.id},include:{tasks:true}});if(!p)return res.status(404).json({message:'Project not found'});res.json(p);}
+export async function createProject(req:Request,res:Response){res.status(201).json(await prisma.project.create({data:{...req.body,ownerId:req.user!.id}}));}
+export async function updateProject(req:Request,res:Response){const id=Number(req.params.id);const found=await prisma.project.findFirst({where:{id,ownerId:req.user!.id}});if(!found)return res.status(404).json({message:'Project not found'});res.json(await prisma.project.update({where:{id},data:req.body}));}
+export async function deleteProject(req:Request,res:Response){const id=Number(req.params.id);const found=await prisma.project.findFirst({where:{id,ownerId:req.user!.id}});if(!found)return res.status(404).json({message:'Project not found'});await prisma.project.delete({where:{id}});res.status(204).send();}

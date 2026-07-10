@@ -1,0 +1,2 @@
+import { Router } from 'express';import { createProject,deleteProject,getProject,listProjects,updateProject } from '../controllers/projectController.js';import { requireAuth } from '../middleware/auth.js';import { validate } from '../middleware/validate.js';import { projectSchema } from '../validators.js';
+export const projectRouter=Router();projectRouter.use(requireAuth);projectRouter.route('/').get(listProjects).post(validate(projectSchema),createProject);projectRouter.route('/:id').get(getProject).put(validate(projectSchema),updateProject).delete(deleteProject);

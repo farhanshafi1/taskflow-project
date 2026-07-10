@@ -1,0 +1,2 @@
+import { Router } from 'express';import { createTask,deleteTask,listTasks,updateTask } from '../controllers/taskController.js';import { requireAuth } from '../middleware/auth.js';import { validate } from '../middleware/validate.js';import { taskSchema } from '../validators.js';
+export const taskRouter=Router();taskRouter.use(requireAuth);taskRouter.get('/projects/:projectId/tasks',listTasks);taskRouter.post('/projects/:projectId/tasks',validate(taskSchema),createTask);taskRouter.put('/tasks/:id',validate(taskSchema),updateTask);taskRouter.delete('/tasks/:id',deleteTask);
