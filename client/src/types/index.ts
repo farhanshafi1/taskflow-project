@@ -1,0 +1,1 @@
+export type User={id:number;name:string;email:string;role:'USER'|'ADMIN'};export type Task={id:number;title:string;description?:string;status:'TODO'|'IN_PROGRESS'|'DONE';priority:'LOW'|'MEDIUM'|'HIGH';dueDate?:string|null;projectId:number};export type Project={id:number;title:string;description?:string;tasks:Task[]};
